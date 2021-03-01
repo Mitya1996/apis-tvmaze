@@ -21,9 +21,13 @@ async function searchShows(query) {
   // TODO: Make an ajax request to the searchShows api.  Remove
   // hard coded data.
   let res = await axios.get(`http://api.tvmaze.com/search/shows?q=${query}`);
-  return res.data;
-
-
+  let showList = res.data;
+  return showList.map(show => ({
+    id: show.show.id,
+    name: show.show.name,
+    summary: show.show.summary,
+    image: show.show.image.original ? show.show.image.original : 'https://tinyurl.com/tv-missing'
+  }));
 }
 
 
@@ -37,9 +41,11 @@ function populateShows(shows) {
   $showsList.empty();
 
   for (let show of shows) {
+    
     let $item = $(
-      `<div class="col-md-6 col-lg-3 Show" data-show-id="${show.id}">
+      `<div class="col-md-6 col-lg-3 Show mb-3" data-show-id="${show.id}">
          <div class="card" data-show-id="${show.id}">
+         <img class="card-img-top" src="${show.image}">
            <div class="card-body">
              <h5 class="card-title">${show.name}</h5>
              <p class="card-text">${show.summary}</p>
