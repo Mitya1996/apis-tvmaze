@@ -108,11 +108,11 @@ async function populateEpisodes(showId) {
     $('#episodes-list').append(`<li>${episode.name} (season ${episode.season}, episode ${episode.number})</li>`);
   }
 
-  $('#episodes-area').css('display', 'inline');
+  $('#episodes-area').show();
 }
 
-$('#shows-list').on('click', '#list-episodes-btn', function(){
+$('#shows-list').on('click', '#list-episodes-btn', function() {
   $('#episodes-list').empty();
-  let id = $(this).parent().parent().attr('data-show-id');
-  populateEpisodes(id);
+  let showId = $(this).closest('.Show').data('show-id');
+  populateEpisodes(showId);
 });
